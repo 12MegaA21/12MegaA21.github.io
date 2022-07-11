@@ -189,7 +189,7 @@
 <li>交错路（alternating path) 始于非匹配点且由匹配边与非匹配边交错而成。</li>
 <li>增广路（augmenting path）是始于非匹配点且终于非匹配点的交错路。</li>
 </ul>
-<p><img src="automaton1.png" alt="automaton1"></p>
+<p><img src="Flow/automaton1.png" alt="automaton1"></p>
 <p>增广路上的非匹配边数量比匹配边数量大，因此每次寻找图中的增广路即可保证最大匹配</p>
 <p>寻找增广路的过程是$O(m)$的，可以证明对于每个左部的点，只需要每个点求一次增广路即可，所以总体的时间复杂度为$O(nm)$</p>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">bool</span> <span class="title">search</span><span class="params">(<span class="type">int</span> now)</span> <span class="comment">// 寻找增广路</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">1</span>; i &lt;= m; ++i)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">if</span> (eg[now][i] &amp;&amp; !vis[i]) <span class="comment">// 如果有边且这个边没有被走过，对于每个点这里的vis都需要初始化为0</span></span><br><span class="line">        &#123;</span><br><span class="line">            vis[i] = <span class="number">1</span>;</span><br><span class="line">            <span class="keyword">if</span> (!use[i] || <span class="built_in">search</span>(use[i])) <span class="comment">// use数组不需要初始化为0</span></span><br><span class="line">            <span class="comment">// 如果这个点没有被用过或者这个点可以给他提供位置（即有增广路）</span></span><br><span class="line">            &#123;</span><br><span class="line">                use[i] = now;</span><br><span class="line">                <span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
@@ -202,7 +202,7 @@
 </ul>
 <p>定理：若相等子图中存在完备匹配，则这个完备匹配是二分图的带权最大匹配。（KM算法的缺陷，只能求存在完备匹配的最大权匹配）</p>
 <p><a target="_blank" rel="noopener" href="https://www.luogu.com.cn/problem/P6577">P6577 【模板】二分图最大权完美匹配</a></p>
-<h3 id="KM算法"><a href="#KM算法" class="headerlink" title="KM算法"></a>KM算法</h3><p><img src="KM1.jpg" alt="KM1"></p>
+<h3 id="KM算法"><a href="#KM算法" class="headerlink" title="KM算法"></a>KM算法</h3><p><img src="Flow/KM1.jpg" alt="KM1"></p>
 <p>KM算法由匈牙利算法拓展出来。</p>
 <p>对一条边的两个顶点：左部（u）和右部（v），其边的权值为w，另左部的顶标为lx，右部的顶标为ly。</p>
 <p>只有当lx+ly=w时，该路径可以被加入相等子图中</p>
@@ -245,7 +245,7 @@
 <p>这是一个经典的 <strong>二者选其一</strong> 的最小割题目。我们对于每个集合设置源点s和汇点t，第i个点由s连一条容量为$a_i$的边、向t连一条容量为$b_i$的边。对于限制条件$u,v,w$，我们在$u,v$之间连容量为$w$的双向边。</p>
 <p>注意到当源点和汇点不相连时，代表这些点都选择了其中一个集合。如果将连向s或t的边割开，表示不放在S或T集合，如果把物品之间的边割开，表示这两个物品不放在同一个集合。</p>
 <p>最小割就是最小花费。</p>
-<p><img src="mincut1.png" alt="mincut1"></p>
+<p><img src="Flow/mincut1.png" alt="mincut1"></p>
 <p>（如图，这里uv之间如果有条件限制，则必须建立双向边，这样才能保证不互通）</p>
 
       
@@ -517,21 +517,5 @@ MathJax.Hub.Queue(function() {
 
 </div>
   </div>
-<script type="text/x-mathjax-config">
-    MathJax.Hub.Config({
-        tex2jax: {
-            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
-            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
-            processEscapes: true
-        }
-    });
-    MathJax.Hub.Queue(function() {
-        var all = MathJax.Hub.getAllJax();
-        for (var i = 0; i < all.length; ++i)
-            all[i].SourceElement().parentNode.className += ' has-jax';
-    });
-</script>
-<!-- <script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script> -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"></script>
 </body>
 </html>
