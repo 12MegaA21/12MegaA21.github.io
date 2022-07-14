@@ -66,7 +66,7 @@ category-all-page {
   .btn-copy {
     display: inline-block;
     position: absolute;
-    right: 0px;
+    right: 5px;
     top: 5px;
     cursor: pointer;
     background-color: #515151;
